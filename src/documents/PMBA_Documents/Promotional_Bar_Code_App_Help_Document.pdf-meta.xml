@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Document xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This is a new Help document for PMBA</description>
+    <internalUseOnly>false</internalUseOnly>
+    <name>Promotional_Bar_Code_App_Help_Document</name>
+    <public>false</public>
+</Document>

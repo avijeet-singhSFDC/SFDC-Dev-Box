@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+	<types>
+		<members>PMBA_Active_List_Controller</members>
+        <members>PMBA_All_Application_Controller</members>
+        <members>PMBA_VeevaWebServiceUtility</members>
+        <members>PMBA_VeevaWebServiceUtility</members>
+		<members>Test_PMBA_Active_List_Controller</members>
+        <members>Test_PMBA_Active_List_Print_Controller</members>
+        <members>Test_PMBA_All_Application_Controller</members>
+        <members>Test_PMBA_BarCodeScan_Handler_Controller</members>
+        <members>Test_PMBA_DocumentQueryResponse</members>
+        <members>Test_PMBA_ProductListResponse</members>
+        <name>ApexClass</name>
+    </types>
+    <types>
+        <members>PMBA_Active_List_Page</members>
+        <members>PMBA_AllApplicationsPage</members>
+        <name>ApexPage</name>
+    </types>
+	<version>38.0</version>
+</Package>

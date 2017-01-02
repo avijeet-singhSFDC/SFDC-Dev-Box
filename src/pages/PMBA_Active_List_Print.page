@@ -1,0 +1,67 @@
+<apex:page controller="PMBA_Active_List_Print_Controller" showHeader="false" sidebar="false" standardStylesheets="false" action="{!initialisePrintActiveListPage}" applyHtmlTag="false" renderAs="pdf">   
+    <head>
+        <style>
+            @page {
+                size:landscape;
+            }
+            body    {
+                font-family:arial,sans-serif;
+                font-weight:normal;
+            }
+            table    {                
+                vertical-align:top;
+                font-size:11px; 
+                width:100%; 
+            }
+            th, td {
+                border: 1px solid black; 
+                text-align:center; 
+            }
+            th{
+                background-color: #767676;
+                font-weight: bold;
+                height:17px;
+                color:white;
+                font-size:12px; 
+            }
+            .odd    {
+                background-color:#eee;
+            }
+            .even    {
+                background-color:#fff;
+            }
+            .header    {
+                text-align:center;
+                font-weight: bold;
+                font-size:20px; 
+            }
+        </style>
+    </head> 
+    
+    <body>
+        <apex:outputPanel rendered="{!activeproducts.size=0}">
+            <div class="header">
+                <p>*** Sorry No Matching Products ***</p>
+            </div> 
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!activeproducts.size>0}">
+            <div class="header">
+                <p>Active Products</p>
+            </div> 
+            <div>   
+                <apex:dataTable value="{!activeproducts}" var="prod" rowClasses="odd,even">
+                    <apex:column headerValue="Document Name" value="{!prod.documentName}"/>
+                    <apex:column headerValue="Document Number" value="{!prod.documentNumber}"/>
+                    <apex:column headerValue="Document Status" value="{!prod.documentStatus}"/>
+                    <apex:column headerValue="Product" value="{!prod.product}"/>
+                    <apex:column headerValue="Audience" value="{!prod.audience}"/>
+                    <apex:column headerValue="Approved User Group" value="{!prod.approvedusergroup}"/>
+                    <apex:column headerValue="Trackable Item" value="{!prod.trackableItem}"/>
+                    <apex:column headerValue="Approximate Retail Value" value="{!prod.approximateRetailValue}"/>
+                    <apex:column headerValue="Cost Per Unit" value="{!prod.costPerUnit}"/>
+                    <apex:column headerValue="Legacy Identifier" value="{!prod.legacyIdentifier}"/>
+                </apex:dataTable>
+            </div>
+        </apex:outputPanel>
+    </body>
+</apex:page>

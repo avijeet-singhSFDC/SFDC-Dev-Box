@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>PMBA_Application_Help_PDF</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PMBA Application Help PDF</shortDescription>
+        <value>Promotional_Bar_Code_App_Help_Document</value>
+    </labels>
+    <labels>
+        <fullName>PMBA_Puerto_Rico</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PMBA Puerto Rico</shortDescription>
+        <value>00C000000000401</value>
+    </labels>
+    <labels>
+        <fullName>PMBA_Scan_Parameter</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>PMBA Scan Parameter</shortDescription>
+        <value>pic2shop</value>
+    </labels>
+    <labels>
+        <fullName>PMBA_Veeva_Vault_Credential_Name</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Veeva Vault Credential Name</shortDescription>
+        <value>Veeva Vault SBX Credentials</value>
+    </labels>
+</CustomLabels>

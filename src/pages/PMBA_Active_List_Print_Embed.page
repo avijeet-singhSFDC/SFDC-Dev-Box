@@ -1,0 +1,46 @@
+<apex:page sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+<apex:includeScript value="{!$Resource.PMBA_JQuery}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.PMBA_Bootstrap, 'css/bootstrap.min.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.PMBA_Bootstrap, 'js/bootstrap.min.js')}"/>
+    <style>
+        .form-control{
+            display: inline-block;
+            width: 80%;
+                        
+        }
+        label {
+            margin-right: 5px;
+        }
+        .center{
+            text-align:center;
+        }
+        .errorMessage{
+            display: block;
+            text-align: center;
+        }
+        #activelisttable{
+            font-size:12px;
+        }
+        .bodydiv{
+            font-size:12px;
+        }
+        .navbar-fixed-top{
+            padding-bottom: 5px;
+        }
+        .apexp{
+            margin-top:160px;
+        }
+        .marginbutton{
+            margin-left: 5px;
+        }
+        .btn-pdf{
+        	float: right;
+        	margin:3px 0;
+        }
+    </style>
+    <apex:form styleclass="form-horizontal">
+    <!--     <apex:commandLink onclick="/apex/PMBA_Active_List_Page?selectedProduct={!$CurrentPage.parameters.selectedProduct}&selectedUserGroup={!$CurrentPage.parameters.selectedUserGroup}" value="Back"/> -->
+    <apex:outputLink styleClass="btn btn-primary btn-pdf" value="/apex/PMBA_Active_List_Page?selectedProduct={!$CurrentPage.parameters.selectedProduct}&selectedUserGroup={!$CurrentPage.parameters.selectedUserGroup}" id="backLink">Return to Field Active List View</apex:outputLink>
+        <apex:iframe src="../apex/PMBA_Active_List_Print?selectedProduct={!$CurrentPage.parameters.selectedProduct}&selectedUserGroup={!$CurrentPage.parameters.selectedUserGroup}" scrolling="true" id="theIframe" height="1000px"/>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,172 @@
+<apex:page controller="PMBA_All_Application_Controller" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false">
+    
+    <!-- bootstrap libraries-->
+    <apex:includeScript value="{!$Resource.PMBA_JQuery}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.PMBA_Bootstrap, 'css/bootstrap.min.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.PMBA_Bootstrap, 'js/bootstrap.min.js')}"/>
+    <script>
+        function clearValue()
+        {
+            window.location.reload();
+        } 
+      
+    </script>
+    <style>        
+        table {
+            margin: 0 auto;
+        }
+        table, td {
+            border: 1px dotted #666666;
+        }
+        table tr td {
+            padding: 15px;
+        }
+        
+        .boldText {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .italicsText {
+            font-style: italic;
+            font-size: 14px;
+        }
+        #documentIdentifierInput {
+            margin-bottom: 10px;
+        }
+        .footer{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 60px;
+        }
+        .center{
+            text-align:center;
+        }
+        .errorMessage{
+            display: block;
+            text-align: center;
+        }
+        #backtopmbausage,#iconnectbutton{
+            margin-top: 10px;
+        }
+    </style>
+
+    <header>
+        <div class="container">
+            <div class="page-header center">
+              <h1>Material Status App</h1>
+            </div>
+        </div>        
+    </header>
+    <apex:form styleclass="form-horizontal" id="theform">
+        <div class="container col-sm-12 col-xs-12">  
+                <apex:outputPanel styleClass="alert alert-danger errorMessage" rendered="{!IF(exceptionMessage!='',true,false)}" >
+                    <apex:outputText value="{!exceptionMessage}"></apex:outputText>
+                </apex:outputPanel>     
+                <apex:actionstatus id="saveActionStatus">
+                    <apex:facet name="start">
+                        <div class="waitingSearchDiv" id="el_loading" style="height: 100%;opacity: 0.4;width: 100%;position: fixed;background-color: white;z-index: 100;margin-top:auto;margin-left:auto;">
+                            <div class="waitingHolder" style="margin:20%; text-align: center;">
+                                <img class="waitingImage" src="/img/loading.gif" title="Saving..." />
+                                <span class="waitingDescription">Processing...</span>
+                            </div>
+                        </div>
+                    </apex:facet>
+                </apex:actionstatus>
+                <table class="table-responsive">
+                    <tr>
+                        <td class="col-sm-6 hidden-xs">
+                             <span class="boldText">
+                                Tap For Instructions
+                             </span>
+                        </td>
+                        <td class="col-sm-6 col-xs-12">
+                            <a class="btn btn-warning" href="{!helpdocumenturl}" target="_blank" status="saveActionStatus">Help</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-sm-6 hidden-xs">
+                            <span class="boldText">
+                                Tap Camera Icon
+                            </span>
+                            <img src="{!URLFOR($Resource.PMBA_Bootstrap, 'png/camera.png')}" width="9%" height="80%"/>
+                            <span class="boldText">
+                                above to scan Barcode
+                            </span>
+                        </td>
+                        <td class="col-sm-6 col-xs-12">
+                            <img src="{!URLFOR($Resource.PMBA_Bootstrap, 'png/barcode.png')}" width="30%" height="80%"/>
+                        </td>
+                        
+                    </tr>
+                    
+                    <!-- <tr>
+                        <td class="col-sm-6 hidden-xs"></td>
+                        <td class="col-sm-6 col-xs-12">OR</td>
+                    </tr>  -->
+                    <tr>
+                        <td class="col-sm-6 hidden-xs">
+                            <p class="boldText">
+                                To SEARCH: 
+                            </p>
+                            <p class="boldText">
+                                Type in Document Identifier OR Legacy Identifier
+                            </p>
+                            <p>
+                                Note: Located on the back of printed materials in the lower left corner.
+                            </p>
+                            <p>
+                                Examples PP-RB-US-3558 or  PPRBUS3558, or RB93558
+                            </p>
+                        </td>
+                        <td class="col-sm-6 col-xs-12">
+                            <apex:input type="text" style="margin-bottom: 10px;" value="{!documentInput}" styleclass="form-control" id="documentIdentifierInput" html-placeholder="Document ID or Legacy ID"/>
+                            <apex:commandButton value="Search" styleClass="btn btn-primary" action="{!searchDocuments}" reRender="theform" status="saveActionStatus">                            
+                            </apex:commandButton>
+                            <apex:commandButton value="Clear Results" style="margin-left: 25px"   styleClass="btn btn-primary" onclick="clearValue()" reRender="theform" status="saveActionStatus">
+                            </apex:commandButton>
+                        </td>
+                        
+                    </tr>                
+                    <tr>
+                        <td class="col-sm-6 hidden-xs">
+                            <p class="boldText"><strong>Current Material Status</strong></p>
+                        </td>                  
+                        <td class="col-sm-6 col-xs-12" style="background-color:{!documentStatusBackGroundColor}">
+                            <apex:outputPanel id="resultsPanel">
+                                <p class="boldText"><strong>{!documentStatus}</strong></p>
+                                <p class="boldText"><strong>{!documentStatus2}</strong></p>
+                                <p class="boldText"><strong>{!documentName}</strong></p>
+                                <p class="boldText"><strong>{!documentExpires}</strong></p>
+                              <!--  <apex:outputText styleClass="boldText" rendered="{!retirementDateSubText != null}"><strong>{!retirementDateSubText}</strong></apex:outputText> -->
+                            </apex:outputPanel>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="col-sm-6 hidden-xs">
+                            <span class="boldText">
+                                        <strong>Tap to view Field Active List</strong>
+                                    </span>
+                        </td>
+                        <td class="col-sm-6 col-xs-12">
+                            <!--<a class="btn btn-primary" href="/apex/PMBA_Active_List_Page">Field Active List</a>-->
+                            <apex:commandButton value="Field Active List" style="margin-left: 25px"   styleClass="btn btn-primary" action="{!activeList}" reRender="null" status="saveActionStatus">
+                            </apex:commandButton>
+                        </td>
+                    </tr>
+                </table>
+                       
+        </div>
+    </apex:form>
+ <!--   <footer>
+        <div class="container">
+            <div class="center">
+              <!--a id="iconnectbutton" class="btn btn-primary" href="http://www.iconnect.lilly.com/" target="_blank" >Order Materials</a-->
+        <!--      <apex:outputPanel rendered="{!isPMBAUsageDetailsTabLinkVisible}">
+                  <a id="backtopmbausage" class="btn btn-primary" href="{!URLFOR($Action.PMBA_Usage_Details__c.Tab, $ObjectType.PMBA_Usage_Details__c)}">App Usage Tab</a>
+              </apex:outputPanel>
+            </div>
+        </div>
+    </footer>  -->
+</apex:page>

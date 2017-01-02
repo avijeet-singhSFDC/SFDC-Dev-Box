@@ -1,0 +1,2 @@
+<apex:page controller="PMBA_BarCodeScan_Handler_Controller" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false" action="{!redirectToPMBAAppPage}">
+</apex:page>

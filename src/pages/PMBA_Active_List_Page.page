@@ -1,0 +1,131 @@
+<apex:page controller="PMBA_Active_List_Controller" sidebar="false" showHeader="false" docType="html-5.0" standardStylesheets="false" action="{!initialisePage}">
+    
+    <!-- bootstrap libraries-->
+    <apex:includeScript value="{!$Resource.PMBA_JQuery}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.PMBA_Bootstrap, 'css/bootstrap.min.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.PMBA_Bootstrap, 'js/bootstrap.min.js')}"/>
+    <style>
+        .form-control{
+            display: inline-block;
+            width: 80%;
+                        
+        }
+        label {
+            margin-right: 5px;
+        }
+        .center{
+            text-align:center;
+        }
+        .errorMessage{
+            display: block;
+            text-align: center;
+        }
+        #activelisttable{
+            font-size:12px;
+        }
+        .bodydiv{
+            font-size:12px;
+        }
+        .navbar-fixed-top{
+            padding-bottom: 5px;
+        }
+        .apexp{
+            margin-top:160px;
+        }
+        .marginbutton{
+            margin-left: 5px;
+        }
+    </style>
+    
+    <nav class="navbar navbar-default navbar-fixed-top center">
+      <h1>Field Active List View</h1>
+      <apex:outputPanel id="errorPanel" styleClass="alert alert-danger errorMessage" rendered="{!IF(exceptionMessage!='',true,false)}" >
+        <apex:outputText value="{!exceptionMessage}"></apex:outputText>
+      </apex:outputPanel>
+      <apex:form styleclass="form-horizontal">   
+                <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <apex:outputLabel value="Select Product"></apex:outputLabel>
+                    <apex:selectList value="{!selectedProductList}" styleClass="form-control" size="1">
+                        <apex:selectOptions value="{!productList}"></apex:selectOptions>
+                        <apex:actionSupport event="onchange" action="{!searchDocuments}" rerender="listViewPanel,errorPanel,navigationbuttons" status="saveActionStatus" oncomplete="resetTable();"/> 
+                    </apex:selectList>                
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6">
+                <div class="form-group">
+                    <apex:outputLabel value="Select User Group"></apex:outputLabel>
+                    <apex:selectList id="userGroupPicklist" value="{!selectedUserGroup}" styleClass="form-control" size="1">
+                        <apex:selectOptions value="{!userGroupList}"></apex:selectOptions>
+                        <apex:actionSupport event="onchange" action="{!searchDocuments}" rerender="listViewPanel,errorPanel,navigationbuttons" status="saveActionStatus" oncomplete="resetTable();"/> 
+                    </apex:selectList>
+                </div>
+            </div>
+            <apex:actionstatus id="saveActionStatus">
+                <apex:facet name="start">
+                  <div class="waitingSearchDiv" id="el_loading" style="background-color: #fbfbfb;height:100%;opacity:0.4;width:100%;">
+                    <div class="waitingHolder" style="margin:20%; text-align: center;">
+                      <img class="waitingImage" src="/img/loading.gif" title="Saving..." />
+                      <span class="waitingDescription">Processing...</span>
+                    </div>
+                  </div>
+                </apex:facet>
+             </apex:actionstatus>
+
+        <apex:outputPanel id="navigationbuttons">
+            <div class="col-md-12 col-sm-12 center">
+                <!--<a class="btn btn-primary" href="/apex/PMBA_AllApplicationsPage" status="saveActionStatus">Back to Home</a>-->
+                <a class="btn btn-primary" onclick="window.open('/apex/PMBA_Active_List_Print?selectedProduct={!JSENCODE(selectedProductList)}&selectedUserGroup={!JSENCODE(selectedUserGroup)}')" >View</a>
+                <!--<apex:outputLink styleClass="btn btn-primary" value="/apex/PMBA_Active_List_Print_Embed?selectedProduct={!JSENCODE(selectedProductList)}&selectedUserGroup={!JSENCODE(selectedUserGroup)}">View</apex:outputLink>-->
+                <!--apex:commandLink styleClass="btn btn-primary" action="{!generateAndEmailActiveListPDFDoc}" reRender="null" value="Email" /-->
+                <apex:commandButton status="saveActionStatus" styleClass="marginbutton btn btn-primary" action="{!backToHome}"  value="Back to Home" reRender="null"/>
+                <!--<apex:commandButton status="saveActionStatus" styleClass="marginbutton btn btn-primary"  action="{!view}" reRender="null" onclick="ViewNew()" value="View"/>-->
+                <apex:commandButton status="saveActionStatus" styleClass="marginbutton btn btn-primary" action="{!generateAndEmailActiveListPDFDoc}" reRender="null" value="Email" oncomplete="alert('Email Sent')"/>
+            </div>
+        </apex:outputPanel> 
+        </apex:form>   
+    </nav>
+    
+    <div class="container col-md-12 col-sm-12 bodydiv">            
+        <apex:pageBlock >                     
+            <apex:outputPanel id="listViewPanel" rendered="{!activeproducts!=null}">         
+                <div id="activelisttable">
+                <c:PMBA_DataTable targetPbTableIds="tableRecords" paginate="true" defaultPageSize="5" pageSizeOptions="5,10,15,20,25,50"/>        
+                <apex:pageBlockTable id="tableRecords" styleClass="list table" border="1" value="{!activeproducts}" var="prod">
+                    <apex:column headerValue="Document Name" rendered="true" value="{!prod.documentName}"/>
+                    <apex:column headerValue="Document Number" rendered="true" value="{!prod.documentNumber}"/>
+                    <apex:column headerValue="Document Status" rendered="true" value="{!prod.documentStatus}"/>
+                    <apex:column headerValue="Product" rendered="true" value="{!prod.product}"/>
+                    <apex:column headerValue="Audience" rendered="true" value="{!prod.audience}"/>
+                    <apex:column headerValue="Approved User Group" rendered="true" value="{!prod.approvedUserGroup}"/>
+                    <apex:column headerValue="Trackable Item" rendered="true" value="{!prod.trackableItem}"/>
+                    <apex:column headerValue="Approximate Retail Value" rendered="true" value="{!prod.approximateRetailValue}"/>
+                    <apex:column headerValue="Cost Per Unit" rendered="true" value="{!prod.costPerUnit}"/> 
+                    <apex:column headerValue="Legacy Identifier" rendered="true" value="{!prod.legacyIdentifier}"/>  
+                </apex:pageBlockTable>
+                </div>
+            </apex:outputPanel>
+            <script type="text/javascript">
+                function resetTable(){
+                  //console.log("Inside resetTable..");
+                  $( "table[id$='tableRecords']").addClass('BlogForce9TableADV');
+                  $('.BlogForce9TableADV').dataTable({
+                        "bJQueryUI": true,
+                        "aaSorting": [],
+                        "order": [[2, "desc" ]],
+                        "bPaginate" : true,
+                        "bDestroy": true,
+                        "sPaginationType": "full_numbers",
+                        "sDom": '<T><"ui-helper-clearfix dtExport"><><"H"lfr>t<"F"ip>',
+                        "aLengthMenu": [5,10,15,20,25,50],
+                        "bProcessing": true,
+                        "iDisplayLength": 5,
+                        "fnInitComplete":function(){            
+                        }
+                  });
+                  $( "table[id$='tableRecords']").show();
+                }
+            </script>
+        </apex:pageBlock>        
+    </div>
+</apex:page>

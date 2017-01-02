@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ReportType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <baseObject>PMBA_Usage_Details__c</baseObject>
+    <category>other</category>
+    <deployed>false</deployed>
+    <description>Application Usage details report</description>
+    <label>PMBA Usage Details Report</label>
+    <sections>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Id</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Owner</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>true</checkedByDefault>
+            <field>Name</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CurrencyIsoCode</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedDate</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CreatedBy</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedDate</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LastModifiedBy</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PMBA_Product_Feature__c</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PMBA_Date_and_Time__c</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>PMBA_User_Id__c</field>
+            <table>PMBA_Usage_Details__c</table>
+        </columns>
+        <masterLabel>PMBA Usage Details</masterLabel>
+    </sections>
+</ReportType>
