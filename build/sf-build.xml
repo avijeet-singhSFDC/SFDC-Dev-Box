@@ -19,6 +19,19 @@
 	 
 	</sf:deploy>
 	</target>
+	
+	<!-- ========================================== -->
+	<!-- Deployment targets                         -->
+	<!-- ========================================== -->
+	<target name="deploy_withargs">
+	<echo message="START: SFDC Deployment" />
+	<sf:deploy deployRoot="${src.dir}" maxPoll="${sf.maxPoll}" pollWaitMillis="${sf.pollWaitMillis}" checkOnly="${sf.checkOnly}" testLevel="${sf.testLevel}" logType="${sf.logType}">
+	 
+	<!-- DO NOT REMOVE THE BELOW COMMENT. THIS IS A PLACEHOLDER THAT IS REPLACED BY THE TESTS THAT SHOULD BE RUN FOR THIS BUILD. -->
+	       <!--runTests-->
+	 
+	</sf:deploy>
+	</target>
 	 
 	 
 	<!-- ========================================== -->
