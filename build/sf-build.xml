@@ -12,6 +12,7 @@
 	<!-- ========================================== -->
 	<target name="deploy_metadata">
 	<echo message="START: SFDC Deployment" />
+	<echo message="${sf.deploy.username}"/>
 	<sf:deploy username="${sf.deploy.username}" password="${sf.deploy.password}" serverurl="${sf.deploy.serverurl}" deployRoot="${src.dir}" maxPoll="${sf.maxPoll}" pollWaitMillis="${sf.pollWaitMillis}" checkOnly="${sf.checkOnly}" testLevel="${sf.testLevel}" logType="${sf.logType}">
 	 
 	<!-- DO NOT REMOVE THE BELOW COMMENT. THIS IS A PLACEHOLDER THAT IS REPLACED BY THE TESTS THAT SHOULD BE RUN FOR THIS BUILD. -->
